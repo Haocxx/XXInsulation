@@ -1,2 +1,2 @@
-include ':app', ':xxinsulation'
+include ':app', ':xxinsulation', ':samplemodule1', ':samplemodule2'
 rootProject.name='XXInsulation'
