@@ -29,7 +29,6 @@ public class InsulationProcessor extends AbstractProcessor {
         return SourceVersion.latestSupported();
     }
 
-
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         return false;
