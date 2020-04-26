@@ -1,2 +1,5 @@
-include ':app', ':xxinsulation', ':samplemodule1', ':samplemodule2'
+include ':app', ':samplemodule1', ':samplemodule2'
+include ':xxinsulation:xxinsulation-client'
+include ':xxinsulation:xxinsulation-annotation'
+include ':xxinsulation:xxinsulation-compiler'
 rootProject.name='XXInsulation'
