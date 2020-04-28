@@ -8,5 +8,5 @@ sourceCompatibility = "7"
 targetCompatibility = "7"
 
 dependencies {
-    api project(':xxinsulation:xxinsulation-annotation')
+    api project(':xxinsulation:xxinsulation-client')
 }

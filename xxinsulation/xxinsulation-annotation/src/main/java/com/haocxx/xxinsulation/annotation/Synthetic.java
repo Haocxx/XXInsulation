@@ -7,10 +7,9 @@ import java.lang.annotation.Target;
 
 /**
  * Created by Haocxx
- * on 2020-04-26
+ * on 2020-04-28
  */
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
-public @interface Insulator {
-    boolean byLazy() default false;
+public @interface Synthetic {
 }

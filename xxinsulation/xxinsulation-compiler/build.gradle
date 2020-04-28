@@ -9,4 +9,6 @@ targetCompatibility = "7"
 
 dependencies {
     implementation project(':xxinsulation:xxinsulation-annotation')
+    implementation 'com.squareup:javapoet:1.12.1'
+    implementation 'com.google.auto.service:auto-service:1.0-rc2'
 }

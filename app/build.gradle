@@ -22,6 +22,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation project(':xxinsulation:xxinsulation-client')
+    implementation project(':base')
     annotationProcessor project(':xxinsulation:xxinsulation-compiler')
 }
