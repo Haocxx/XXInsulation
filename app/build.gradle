@@ -23,5 +23,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation project(':base')
+    implementation project(':samplemodule1')
+    implementation project(':samplemodule2')
     annotationProcessor project(':xxinsulation:xxinsulation-compiler')
 }

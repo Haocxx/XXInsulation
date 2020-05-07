@@ -13,6 +13,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
@@ -26,6 +28,13 @@ import javax.lang.model.element.TypeElement;
 @AutoService(Processor.class)
 public class InsulationProcessor extends AbstractProcessor {
     public static final String TAG = "InsulationProcessor";
+    private Filer mFiler;
+
+    @Override
+    public synchronized void init(ProcessingEnvironment processingEnvironment) {
+        super.init(processingEnvironment);
+        mFiler = processingEnvironment.getFiler();
+    }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -58,7 +67,7 @@ public class InsulationProcessor extends AbstractProcessor {
                 .build();
 
         try {
-            javaFile.writeTo(processingEnv.getFiler());
+            javaFile.writeTo(mFiler);
         } catch (IOException e) {
             System.out.println(TAG + ": process failed");
             e.printStackTrace();
