@@ -1,6 +1,5 @@
 package com.haocxx.xxinsulation.compiler;
 
-import com.google.auto.service.AutoService;
 import com.haocxx.xxinsulation.annotation.Insulator;
 import com.haocxx.xxinsulation.annotation.Synthetic;
 import com.squareup.javapoet.JavaFile;
@@ -15,7 +14,6 @@ import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Modifier;
@@ -25,14 +23,22 @@ import javax.lang.model.element.TypeElement;
  * Created by Haocxx
  * on 2020-04-26
  */
-@AutoService(Processor.class)
 public class InsulationProcessor extends AbstractProcessor {
     public static final String TAG = "InsulationProcessor";
+    public static final String CLASS_NAME = "insulatorPackageName";
+    private boolean mHasProcessed;
+    private String mPackageName;
     private Filer mFiler;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
+        String fullName = processingEnv.getOptions().get(CLASS_NAME);
+        if (fullName == null) {
+            mHasProcessed = true;
+            return;
+        }
+        mPackageName = fullName;
         mFiler = processingEnvironment.getFiler();
     }
 
@@ -50,6 +56,9 @@ public class InsulationProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
+        if (mHasProcessed) {
+            return false;
+        }
 
         MethodSpec getInsulatorClasses = MethodSpec.methodBuilder("getInsulatorClasses")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
@@ -63,7 +72,7 @@ public class InsulationProcessor extends AbstractProcessor {
                 .addMethod(getInsulatorClasses)
                 .build();
 
-        JavaFile javaFile = JavaFile.builder("com.haocxx.xxinsulation", clazz)
+        JavaFile javaFile = JavaFile.builder(mPackageName, clazz)
                 .build();
 
         try {
@@ -72,7 +81,7 @@ public class InsulationProcessor extends AbstractProcessor {
             System.out.println(TAG + ": process failed");
             e.printStackTrace();
         }
-
+        mHasProcessed = true;
         return true;
     }
 }

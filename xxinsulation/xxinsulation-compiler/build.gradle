@@ -11,6 +11,4 @@ dependencies {
     implementation fileTree(dir:'libs',include: ['*.jar'])
     implementation project(':xxinsulation:xxinsulation-annotation')
     implementation 'com.squareup:javapoet:1.12.1'
-    compileOnly 'com.google.auto.service:auto-service:1.0-rc2'
-    annotationProcessor "com.google.auto.service:auto-service:1.0-rc2"
 }

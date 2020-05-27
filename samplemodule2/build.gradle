@@ -10,6 +10,13 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [insulatorPackageName: 'com.haocxx.samplemodule2',
+                ]
+            }
+        }
     }
 
     buildTypes {
