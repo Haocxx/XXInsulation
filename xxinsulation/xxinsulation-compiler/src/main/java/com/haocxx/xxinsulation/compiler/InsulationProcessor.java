@@ -2,8 +2,10 @@ package com.haocxx.xxinsulation.compiler;
 
 import com.haocxx.xxinsulation.annotation.Insulator;
 import com.haocxx.xxinsulation.annotation.Synthetic;
+import com.haocxx.xxinsulation.interfaces.InsulatorList;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
@@ -24,8 +27,8 @@ import javax.lang.model.element.TypeElement;
  * on 2020-04-26
  */
 public class InsulationProcessor extends AbstractProcessor {
-    public static final String TAG = "InsulationProcessor";
-    public static final String CLASS_NAME = "insulatorPackageName";
+    private static final String TAG = "InsulationProcessor";
+    private static final String CLASS_NAME = "insulatorPackageName";
     private boolean mHasProcessed;
     private String mPackageName;
     private Filer mFiler;
@@ -60,16 +63,20 @@ public class InsulationProcessor extends AbstractProcessor {
             return false;
         }
 
-        MethodSpec getInsulatorClasses = MethodSpec.methodBuilder("getInsulatorClasses")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .returns(void.class)
-                .addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
-                .build();
+        MethodSpec.Builder getInsulatorClasses = MethodSpec.methodBuilder("getInsulatorClasses")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC)
+                .addParameter(ParameterSpec.builder(InsulatorList.class, "insulatorList").build())
+                .returns(void.class);
+
+        for (Element element : roundEnvironment.getElementsAnnotatedWith(Insulator.class)) {
+            getInsulatorClasses.addStatement("insulatorList.add($L.class)",
+                ((TypeElement)element).getQualifiedName().toString());
+        }
 
         TypeSpec clazz = TypeSpec.classBuilder("Insulation_Server")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addAnnotation(Synthetic.class)
-                .addMethod(getInsulatorClasses)
+                .addMethod(getInsulatorClasses.build())
                 .build();
 
         JavaFile javaFile = JavaFile.builder(mPackageName, clazz)
@@ -82,6 +89,6 @@ public class InsulationProcessor extends AbstractProcessor {
             e.printStackTrace();
         }
         mHasProcessed = true;
-        return true;
+        return false;
     }
 }

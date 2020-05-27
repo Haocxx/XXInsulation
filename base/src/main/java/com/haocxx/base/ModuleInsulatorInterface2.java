@@ -1,6 +1,6 @@
 package com.haocxx.base;
 
-import com.haocxx.xxinsulation.IInsulator;
+import com.haocxx.xxinsulation.interfaces.IInsulator;
 
 /**
  * Created by Haocxx

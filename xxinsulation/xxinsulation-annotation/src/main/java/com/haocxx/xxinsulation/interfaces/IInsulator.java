@@ -1,4 +1,4 @@
-package com.haocxx.xxinsulation;
+package com.haocxx.xxinsulation.interfaces;
 
 /**
  * Created by Haocxx

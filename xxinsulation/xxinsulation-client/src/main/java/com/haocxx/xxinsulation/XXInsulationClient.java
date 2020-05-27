@@ -3,6 +3,8 @@ package com.haocxx.xxinsulation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
+import com.haocxx.xxinsulation.interfaces.IInsulator;
+
 /**
  * Created by Haocxx
  * on 2020-04-26
@@ -54,7 +56,16 @@ public class XXInsulationClient {
     }
 
     public synchronized void addInsulator(Class<? extends IInsulator> implClazz) {
-        Class<IInsulator> interfaceClazz = (Class<IInsulator>) implClazz.getSuperclass();
-        mInsulatorMap.put(interfaceClazz, implClazz);
+        Class<?>[] interfaces = implClazz.getInterfaces();
+        if (interfaces != null && interfaces.length > 0) {
+            for (Class<?> interfaceClazz : interfaces) {
+                if (interfaceClazz == IInsulator.class) {
+                    continue;
+                }
+                try {
+                    mInsulatorMap.put((Class<? extends IInsulator>) interfaceClazz, implClazz);
+                } catch (Throwable e) {}
+            }
+        }
     }
 }
