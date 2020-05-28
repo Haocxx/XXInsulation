@@ -37,7 +37,10 @@ public class XXInsulationClient {
         }
     }
 
-    public synchronized  <T extends IInsulator> T getInsulator(Class<T> clazz) {
+    public synchronized <T extends IInsulator> T getInsulator(Class<T> clazz) {
+        if (!clazz.isInterface()) {
+            throw new RuntimeException(clazz.getName() + " is not interface.");
+        }
         IInsulator cachedInsulator = mInsulatorCachedMap.get(clazz);
         if (cachedInsulator != null) {
             return (T) cachedInsulator;
