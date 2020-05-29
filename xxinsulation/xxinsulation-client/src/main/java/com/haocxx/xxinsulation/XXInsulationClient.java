@@ -1,9 +1,12 @@
 package com.haocxx.xxinsulation;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 import com.haocxx.xxinsulation.interfaces.IInsulator;
+import com.haocxx.xxinsulation.interfaces.IServer;
+import com.haocxx.xxinsulation.interfaces.InsulatorList;
 
 /**
  * Created by Haocxx
@@ -27,13 +30,17 @@ public class XXInsulationClient {
     }
 
     public void init() {
-        try {
-            Class<?> clazz = Class.forName("com.haocxx.xxinsulation.Insulation_Server");
-            Method getInsulatorClasses = clazz.getMethod("getInsulatorClasses");
-            Object lists = getInsulatorClasses.invoke(null);
-            //if (lists != null && lists instanceof )
-        } catch (Exception e) {
-            e.printStackTrace();
+        ServiceLoader<IServer> loader = ServiceLoader.load(IServer.class);
+        Iterator<IServer> iterator = loader.iterator();
+        while (iterator.hasNext()) {
+            IServer server = iterator.next();
+            try {
+                InsulatorList insulatorList = new InsulatorList();
+                server.getInsulatorClasses(insulatorList);
+                addInsulators(insulatorList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -56,6 +63,12 @@ public class XXInsulationClient {
             }
         }
         return null;
+    }
+
+    public void addInsulators(InsulatorList insulatorList) {
+        for (int i = 0; i < insulatorList.size(); i++) {
+            addInsulator(insulatorList.get(i));
+        }
     }
 
     public synchronized void addInsulator(Class<? extends IInsulator> implClazz) {

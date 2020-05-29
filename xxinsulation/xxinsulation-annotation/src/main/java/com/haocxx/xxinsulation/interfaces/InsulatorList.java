@@ -18,6 +18,10 @@ public class InsulatorList {
         return mList.size();
     }
 
+    public Class<? extends IInsulator> get(int index) {
+        return mList.get(index);
+    }
+
     public void add(Class<? extends IInsulator> insulatorClazz) {
         mList.add(insulatorClazz);
     }
