@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.haocxx.base.LoginInterface;
 import com.haocxx.base.ModuleInsulatorInterface1;
 import com.haocxx.base.ModuleInsulatorInterface2;
+import com.haocxx.base.PlayerInterface;
 import com.haocxx.xxinsulation.XXInsulationClient;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,5 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         XXInsulationClient.getDefault().getInsulator(ModuleInsulatorInterface1.class).testImpl();
         XXInsulationClient.getDefault().getInsulator(ModuleInsulatorInterface2.class).testImpl();
+        XXInsulationClient.getDefault().getInsulator(LoginInterface.class).login();
+        XXInsulationClient.getDefault().getInsulator(PlayerInterface.class).start();
     }
 }

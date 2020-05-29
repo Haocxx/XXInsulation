@@ -1,5 +1,7 @@
 package com.haocxx.xxinsulation.test;
 
+import android.util.Log;
+
 import com.haocxx.base.PlayerInterface;
 import com.haocxx.xxinsulation.annotation.Insulator;
 
@@ -11,7 +13,7 @@ import com.haocxx.xxinsulation.annotation.Insulator;
 public class PlayImpl implements PlayerInterface {
     @Override
     public void start() {
-
+        Log.d("Haocxx_PlayImpl", "start");
     }
 
     @Override
