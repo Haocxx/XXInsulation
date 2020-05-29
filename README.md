@@ -27,7 +27,7 @@ Then, implement interface in a decouple module, remember add {@Insulator} to it.
 public class LoginImpl implements LoginInterface {
     @Override
     public void login() {
-        // login logic..
+        Log.d("Haocxx_LoginImpl", "login");
     }
 }
 ```
@@ -53,6 +53,11 @@ Now you can use XXInsulation and interface to reach implement class.
 ```Java
 XXInsulationClient.getDefault().getInsulator(LoginInterface.class).login();
 ```
+And in logcat:
+```txt
+2020-05-29 18:58:30.714 31211-31211/? D/Haocxx_LoginImpl: login
+```
+Fucking perfect, yeah?
 
 ## Dependencies
 [JavaPoet](https://github.com/square/javapoet)
