@@ -31,8 +31,8 @@ public class LoginImpl implements LoginInterface {
     }
 }
 ```
-Last you need to define {#insulatorPackageName} in build.gradle of decouple module.
-ATTENTION: {#insulatorPackageName} must be unique for a module.
+Last you need to define {#insulatorPackageName} in build.gradle of decouple module. 
+ATTENTION: {#insulatorPackageName} must be unique for a module. 
 Do not define a same {#insulatorPackageName} for two module.
 ```Gradle
 android {
